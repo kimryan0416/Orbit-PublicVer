@@ -5,12 +5,12 @@
 <hr>
 
 ### Group Name and Project Title:
-- [Insert your group number]
-- [Insert your project title]
+- G04
+- Orbit
 
 ### Group Members:
 
-- [Insert your full name, Cornell email, GitHub handle]
+- Ryan Kim - [rk494@cornell.edu](rk494@cornell.edu) - kimryan0416
 - [Insert your full name, Cornell email, GitHub handle]
 - [Insert your full name, Cornell email, GitHub handle]
 

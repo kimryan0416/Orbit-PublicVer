@@ -11,7 +11,7 @@
 ### Group Members:
 
 - Ryan Kim - [rk494@cornell.edu](rk494@cornell.edu) - kimryan0416
-- [Insert your full name, Cornell email, GitHub handle]
+- Vini Tripathii - [ut33@cornell.edu](ut33@cornell.edu) - kimryan0416
 - [Insert your full name, Cornell email, GitHub handle]
 
 

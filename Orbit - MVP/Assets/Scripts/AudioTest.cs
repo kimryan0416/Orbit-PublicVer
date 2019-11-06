@@ -2,46 +2,51 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent (typeof (AudioSource))]  
+public class AudioTest : OVRGrabbable
+{ 
+    private Orb orbRef;
+    private AudioSource goAudioSource;  //A handle to the attached AudioSource  
 
-public class AudioTest : MonoBehaviour
-{
-    //A boolean that flags whether there's a connected microphone  
-    private bool micConnected = false;  
+    /// <summary>
+	/// Notifies the object that it has been grabbed.
+	/// </summary>
+	public override void GrabBegin(OVRGrabber hand, Collider grabPoint)
+    {
+        m_grabbedBy = hand;
+        m_grabbedCollider = grabPoint;
+        gameObject.GetComponent<Rigidbody>().isKinematic = true;
+    }
 
-    //The maximum and minimum available recording frequencies  
-    private int minFreq;  
-    private int maxFreq;  
+    /// <summary>
+	/// Notifies the object that it has been released.
+	/// </summary>
+    public override void GrabEnd(Vector3 linearVelocity, Vector3 angularVelocity)
+    {
+        Rigidbody rb = gameObject.GetComponent<Rigidbody>();
+        rb.isKinematic = m_grabbedKinematic;
+        rb.velocity = linearVelocity;
+        rb.angularVelocity = angularVelocity;
+        m_grabbedBy = null;
+        m_grabbedCollider = null;
+    }
 
-    //A handle to the attached AudioSource  
-    private AudioSource goAudioSource;  
-
+    /*
     void Start()
     {
         //Check if there is at least one microphone connected  
-        if(Microphone.devices.Length <= 0)  
-        {  
-            //Throw a warning message at the console if there isn't  
-            Debug.LogWarning("Microphone not connected!");  
-        }
-
-        else //At least one microphone is present  
-        {  
-            //Set 'micConnected' to true  
-            micConnected = true;  
-  
-            //Get the default microphone recording capabilities  
-            Microphone.GetDeviceCaps(null, out minFreq, out maxFreq);  
-  
+        //Throw a warning message at the console if there isn't 
+        if(Microphone.devices.Length <= 0)  Debug.LogWarning("Microphone not connected!");
+        
+        //At least one microphone is present 
+        else {  
+            micConnected = true;    //Set 'micConnected' to true    
+            Microphone.GetDeviceCaps(null, out minFreq, out maxFreq);   //Get the default microphone recording capabilities 
+            
             //According to the documentation, if minFreq and maxFreq are zero, the microphone supports any frequency...  
-            if(minFreq == 0 && maxFreq == 0)  
-            {  
-                //...meaning 44100 Hz can be used as the recording sampling rate  
-                maxFreq = 44100;  
-            }  
+            //...meaning 44100 Hz can be used as the recording sampling rate 
+            if(minFreq == 0 && maxFreq == 0)    maxFreq = 44100; 
   
-            //Get the attached AudioSource component  
-            goAudioSource = this.GetComponent<AudioSource>();  
+            goAudioSource = this.GetComponent<AudioSource>();  //Get the attached AudioSource component  
         }  
     }
 
@@ -80,4 +85,5 @@ public class AudioTest : MonoBehaviour
         }  
   
     }  
+    */
 }

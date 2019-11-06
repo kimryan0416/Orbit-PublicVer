@@ -7,6 +7,8 @@ public class SceneController : MonoBehaviour
 
     private bool micConnected = false;      //A boolean that flags whether there's a connected microphone 
     private int minFreq, maxFreq;    //The minimum and maximum available recording frequencies  
+    
+    public Camera centerEyeCamera;
 
     // Start is called before the first frame update
     void Start()

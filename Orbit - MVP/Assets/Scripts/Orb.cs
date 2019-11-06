@@ -16,6 +16,9 @@ public class Orb : MonoBehaviour
     
     private bool recording;
     private AudioSource aud;
+    public OVRInput.Button shootingButton;
+    private bool isTriggered;
+    private bool isGrabbed;
     //private IEnumerator coroutine;
 
     // Start is called before the first frame update
@@ -26,6 +29,8 @@ public class Orb : MonoBehaviour
         rendererRef = this.GetComponent<Renderer>();
         aud = this.GetComponent<AudioSource>();
         recording = false;
+        isTriggered = false;
+        isGrabbed = false;
         //coroutine = GetMicCount();
         //StartCoroutine(coroutine);
     }
@@ -33,10 +38,19 @@ public class Orb : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        isGrabbed = grabbableRef.isGrabbed;
+        if (isGrabbed && OVRInput.GetDown(shootingButton,grabbableRef.grabbedBy.GetController())) isTriggered = true;
+        if (!isGrabbed || OVRInput.GetUp(shootingButton,grabbableRef.grabbedBy.GetController())) isTriggered = false;
+
         if (grabbableRef.isGrabbed) {
-            SetColor(Color.green);
-            aud.mute = false;
             buttonCanvas.SetActive(true);
+            if (isTriggered) {
+                aud.mute = false;
+                SetColor(Color.blue);
+            } else {
+                aud.mute = true;
+                SetColor(Color.green);
+            }
         }
         else {
             EndRecording();

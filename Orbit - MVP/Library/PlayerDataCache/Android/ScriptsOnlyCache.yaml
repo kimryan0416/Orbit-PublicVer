@@ -21,6 +21,7 @@ ScriptsOnlyBuild:
     - OVRHeadsetEmulator
     - OVRManager
     - OVRPlayerController
+    - OVRRaycaster
     - OVRSceneSampleController
     - OVRScreenFade
     Unity.TextMeshPro.dll:
@@ -36,10 +37,8 @@ ScriptsOnlyBuild:
     UnityEngine.UI.dll:
     - UnityEngine.EventSystems.EventSystem
     - UnityEngine.EventSystems.StandaloneInputModule
-    - UnityEngine.UI.Button
     - UnityEngine.UI.CanvasScaler
     - UnityEngine.UI.GraphicRaycaster
-    - UnityEngine.UI.Image
   sceneClasses:
     Assets/Scenes/SampleScene.unity:
     - Class: 1
@@ -89,7 +88,7 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 10008}
     - Class: 114
-      Script: {instanceID: 10082}
+      Script: {instanceID: 10104}
     - Class: 114
       Script: {instanceID: 10216}
     - Class: 114
@@ -112,8 +111,6 @@ ScriptsOnlyBuild:
       Script: {instanceID: 10962}
     - Class: 114
       Script: {instanceID: 11108}
-    - Class: 114
-      Script: {instanceID: 11164}
     - Class: 114
       Script: {instanceID: 11382}
     - Class: 114
@@ -157,8 +154,6 @@ ScriptsOnlyBuild:
     - Class: 143
       Script: {instanceID: 0}
     - Class: 157
-      Script: {instanceID: 0}
-    - Class: 213
       Script: {instanceID: 0}
     - Class: 215
       Script: {instanceID: 0}
@@ -1415,7 +1410,7 @@ ScriptsOnlyBuild:
     className: TeleportTargetHandlerNavMesh
   - hash:
       serializedVersion: 2
-      Hash: 85e8aa29d665952264bc2b39d7dd56b9
+      Hash: 39d80cc683459a8dcad09ae1ca115196
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: LaserPointer
@@ -1547,13 +1542,13 @@ ScriptsOnlyBuild:
     className: PlayableTrack
   - hash:
       serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+      Hash: ca82536f156ddd1a75f9715368480d09
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: SceneController
   - hash:
       serializedVersion: 2
-      Hash: f083308790b5744a2d900efd0e1e7c5b
+      Hash: d6ff8d7469d607abbfab539e49fc4543
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Orb

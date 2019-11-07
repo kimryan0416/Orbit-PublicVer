@@ -9,42 +9,60 @@ public class SceneController : MonoBehaviour
     private int minFreq, maxFreq;    //The minimum and maximum available recording frequencies  
     public Camera centerEyeCamera;
     public GameObject orbPrefab;
-    public List<Orb> orbs;
+    public List<GameObject> orbs;
+    private bool isTriggered;
+	private AudioSource goAudioSource;  //A handle to the attached AudioSource
+
+    public GameObject curOrb;
+    private Vector3 curOrbVelocity;
 
     // Start is called before the first frame update
     void Start()
     {
-        orbs = new List<Orb>();
-        /*
-        //Check if there is at least one microphone connected  
-        //Throw a warning message at the console if there isn't 
-        if(Microphone.devices.Length <= 0)  Debug.LogWarning("Microphone not connected!");
-        
-        //At least one microphone is present 
-        else {  
-            micConnected = true;    //Set 'micConnected' to true    
-            Microphone.GetDeviceCaps(null, out minFreq, out maxFreq);   //Get the default microphone recording capabilities 
-            
-            //According to the documentation, if minFreq and maxFreq are zero, the microphone supports any frequency...  
-            //...meaning 44100 Hz can be used as the recording sampling rate 
-            if(minFreq == 0 && maxFreq == 0)    maxFreq = 44100; 
-        }  
-        */
-    }
+        orbs = new List<GameObject>();
+        goAudioSource = this.GetComponent<AudioSource>();
 
-    // Update is called once per frame
-    void Update()
-    {
+        curOrbVelocity = Vector3.zero;
+        
         micConnected = Microphone.devices.Length > 0;
         if (micConnected) {
             Microphone.GetDeviceCaps(null, out minFreq, out maxFreq);   //Get the default microphone recording capabilities 
             //According to the documentation, if minFreq and maxFreq are zero, the microphone supports any frequency...  
             //...meaning 44100 Hz can be used as the recording sampling rate 
-            if(minFreq == 0 && maxFreq == 0)    maxFreq = 44100; 
+            if(minFreq == 0 && maxFreq == 0) maxFreq = 44100; 
         }
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
         if (OVRInput.Get(OVRInput.Button.One)) {
-            Instantiate(orbPrefab, centerEyeCamera.transform.position + Vector3.forward * 0.2f, Quaternion.identity);
+            //GameObject newOrb = Instantiate(orbPrefab, centerEyeCamera.transform.position + Vector3.forward * 0.2f, Quaternion.identity);
+            //orbs.Add(newOrb);
+            curOrb.transform.position = Vector3.SmoothDamp(curOrb.transform.position, centerEyeCamera.transform.position + Vector3.forward * 0.2f + Vector3.up * -0.2f, ref curOrbVelocity, 0.3f);
+            curOrb.GetComponent<Rigidbody>().velocity = curOrbVelocity;
         }
+        
+        /*
+        isTriggered = false;
+        foreach(GameObject orb in orbs) {
+            if (orb.GetComponent<Orb>().GetTriggered()) {
+                isTriggered = true;
+            }
+        }
+        if (isTriggered && !Microphone.IsRecording(null)) {
+			goAudioSource.clip = Microphone.Start(null, true, 20, maxFreq);
+			//orb.SetColor(Color.blue);
+		}
+		else if (!isTriggered && Microphone.IsRecording(null)) {
+			Microphone.End(null); //Stop the audio recording
+			goAudioSource.Play(); //Playback the recorded audio
+			//orb.SetColor(Color.green);
+		} else {
+			//orb.SetColor(Color.yellow);
+		}
+        */
+
     }
 
     public bool GetMicStatus() {

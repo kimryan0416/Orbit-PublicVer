@@ -56,14 +56,20 @@ public class SingleMicrophoneCapture : MonoBehaviour
 		if (micConnected) {
 			minFreq = SC.GetMinFreq();
 			maxFreq = SC.GetMaxFreq();
-			if (orb.GetTriggered() && !Microphone.IsRecording(null)) {
-				goAudioSource.clip = Microphone.Start(null, true, 20, maxFreq);
-				orb.SetColor(Color.blue);
-			}
-			else if (!orb.GetTriggered() && Microphone.IsRecording(null)) {
-				Microphone.End(null); //Stop the audio recording
-				goAudioSource.Play(); //Playback the recorded audio
-				orb.SetColor(Color.green);
+			if (orb.GetGrabbed()) {
+				if (orb.GetTriggered()) {
+					orb.SetColor(Color.blue);
+					if (!Microphone.IsRecording(null)) {
+						goAudioSource.clip = Microphone.Start(null, true, 20, maxFreq);
+					}
+				}
+				else {
+					orb.SetColor(Color.green);
+					if (Microphone.IsRecording(null)) {
+						Microphone.End(null); //Stop the audio recording
+						goAudioSource.Play(); //Playback the recorded audio
+					}
+				} 
 			} else {
 				orb.SetColor(Color.yellow);
 			}

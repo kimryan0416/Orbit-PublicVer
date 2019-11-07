@@ -786,7 +786,7 @@ ScriptsOnlyBuild:
     className: TeleportOrientationHandlerHMD
   - hash:
       serializedVersion: 2
-      Hash: 6e292f67453495e67533ce0f9cf504a9
+      Hash: f559d51e2dc7d5d987493de40b8448f4
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: SceneController

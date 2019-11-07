@@ -19,6 +19,7 @@ public class Orb : MonoBehaviour
     public OVRInput.Button shootingButton;
     private bool isTriggered;
     private bool isGrabbed;
+
     //private IEnumerator coroutine;
 
     // Start is called before the first frame update
@@ -91,20 +92,7 @@ public class Orb : MonoBehaviour
     public bool GetTriggered() {
         return isTriggered;
     }
-
-    public void ToggleRecording() {
-        if (!recording) {
-            StartRecording();
-        } else {
-            EndRecording();
-        }
-    }
-    public void StartRecording() {
-        SetColor(Color.blue);
-        recording = true;
-    }
-    public void EndRecording() {
-        SetColor(Color.green);
-        recording = false;
+    public bool GetGrabbed() {
+        return isGrabbed;
     }
 }

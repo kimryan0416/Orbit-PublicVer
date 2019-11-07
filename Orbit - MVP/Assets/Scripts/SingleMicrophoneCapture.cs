@@ -5,12 +5,14 @@ using System.Collections;
 
 public class SingleMicrophoneCapture : MonoBehaviour 
 {
+	private Orb orb;
+	private SceneController SC;
+
 	//A boolean that flags whether there's a connected microphone
-	private bool micConnected = false;
+	private bool micConnected;
 	
 	//The maximum and minimum available recording frequencies
-	private int minFreq;
-	private int maxFreq;
+	private int minFreq, maxFreq;
 	
 	//A handle to the attached AudioSource
 	private AudioSource goAudioSource;
@@ -18,6 +20,10 @@ public class SingleMicrophoneCapture : MonoBehaviour
 	//Use this for initialization
 	void Start() 
 	{
+		orb = this.GetComponent<Orb>();
+		SC = orb.GetSceneController();
+		goAudioSource = this.GetComponent<AudioSource>();
+		/*
 		//Check if there is at least one microphone connected
 		if(Microphone.devices.Length <= 0)
 		{
@@ -42,8 +48,63 @@ public class SingleMicrophoneCapture : MonoBehaviour
 			//Get the attached AudioSource component
 			goAudioSource = this.GetComponent<AudioSource>();
 		}
+		*/
 	}
-	
+
+	void Update() {
+		micConnected = SC.GetMicStatus();
+		if (micConnected) {
+			minFreq = SC.GetMinFreq();
+			maxFreq = SC.GetMaxFreq();
+			if (orb.GetTriggered() && !Microphone.IsRecording(null)) {
+				goAudioSource.clip = Microphone.Start(null, true, 20, maxFreq);
+				orb.SetColor(Color.blue);
+			}
+			else if (!orb.GetTriggered() && Microphone.IsRecording(null)) {
+				Microphone.End(null); //Stop the audio recording
+				goAudioSource.Play(); //Playback the recorded audio
+				orb.SetColor(Color.green);
+			} else {
+				orb.SetColor(Color.yellow);
+			}
+			/*
+			if (orb.GetTriggered() && !Microphone.IsRecording(null)) {
+				goAudioSource.clip = Microphone.Start(null, true, 20, maxFreq);
+				orb.SetColor(Color.blue);
+			}
+			if (!orb.GetTriggered() && Microphone.IsRecording(null)) {
+				Microphone.End(null); //Stop the audio recording
+				goAudioSource.Play(); //Playback the recorded audio
+				orb.SetColor(Color.green);
+			} else {
+				orb.SetColor(Color.black);
+			}
+			*/
+		} else {
+			orb.SetColor(Color.red);
+		}
+			/*
+			minFreq = SC.GetMinFreq();
+			maxFreq = SC.GetMaxFreq();
+			if (orb.GetTriggered() && !Microphone.IsRecording(null)) {
+				goAudioSource.clip = Microphone.Start(null, true, 20, maxFreq);
+				orb.SetColor(Color.blue);
+			}
+			if (!orb.GetTriggered() && Microphone.IsRecording(null)) {
+				Microphone.End(null); //Stop the audio recording
+				goAudioSource.Play(); //Playback the recorded audio
+				orb.SetColor(Color.green);
+			}
+			else {
+				orb.SetColor(Color.yellow);
+			}
+		} else {
+			orb.SetColor(Color.red);
+		}
+		*/
+	}
+
+	/*
 	void OnGUI() 
 	{
 		//If there is a microphone
@@ -78,4 +139,5 @@ public class SingleMicrophoneCapture : MonoBehaviour
 			GUI.Label(new Rect(Screen.width/2-100, Screen.height/2-25, 200, 50), "Microphone not connected!");
 		}
 	}
+	*/
 }

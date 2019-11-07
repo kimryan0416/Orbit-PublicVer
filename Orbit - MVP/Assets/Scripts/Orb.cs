@@ -22,7 +22,7 @@ public class Orb : MonoBehaviour
     //private IEnumerator coroutine;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         SC = GameObject.Find("SceneController").GetComponent<SceneController>();
         grabbableRef = this.GetComponent<OVRGrabbable>();
@@ -31,6 +31,14 @@ public class Orb : MonoBehaviour
         recording = false;
         isTriggered = false;
         isGrabbed = false;
+        SetColor(Color.red);
+        /*
+        if (!SC.GetMicStatus()) {
+            SetColor(Color.red);
+        } else {
+            SetColor(Color.yellow);
+        }
+        */
         //coroutine = GetMicCount();
         //StartCoroutine(coroutine);
     }
@@ -39,9 +47,14 @@ public class Orb : MonoBehaviour
     void Update()
     {
         isGrabbed = grabbableRef.isGrabbed;
-        if (isGrabbed && OVRInput.GetDown(shootingButton,grabbableRef.grabbedBy.GetController())) isTriggered = true;
-        if (!isGrabbed || OVRInput.GetUp(shootingButton,grabbableRef.grabbedBy.GetController())) isTriggered = false;
-
+        if (OVRInput.GetDown(shootingButton,grabbableRef.grabbedBy.GetController())) isTriggered = true;
+        if (OVRInput.GetUp(shootingButton,grabbableRef.grabbedBy.GetController())) isTriggered = false;
+        /*
+        if (OVRInput.GetDown(shootingButton,grabbableRef.grabbedBy.GetController()) && !isTriggered) isTriggered = true;
+        if (OVRInput.GetUp(shootingButton,grabbableRef.grabbedBy.GetController()) && isTriggered) isTriggered = false;
+        */
+        
+        /*
         if (grabbableRef.isGrabbed) {
             buttonCanvas.SetActive(true);
             if (isTriggered) {
@@ -58,6 +71,7 @@ public class Orb : MonoBehaviour
             aud.mute = true;
             buttonCanvas.SetActive(false);
         }
+        */
     }
     /*
     private IEnumerator GetMicCount() {
@@ -68,9 +82,16 @@ public class Orb : MonoBehaviour
     }
     */
 
+    public SceneController GetSceneController() {
+        return SC;
+    }
     public void SetColor(Color c) {
         rendererRef.material.SetColor("_Color", c);
     }
+    public bool GetTriggered() {
+        return isTriggered;
+    }
+
     public void ToggleRecording() {
         if (!recording) {
             StartRecording();

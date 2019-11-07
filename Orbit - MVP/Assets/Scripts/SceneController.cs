@@ -7,12 +7,14 @@ public class SceneController : MonoBehaviour
 
     private bool micConnected = false;      //A boolean that flags whether there's a connected microphone 
     private int minFreq, maxFreq;    //The minimum and maximum available recording frequencies  
-    
     public Camera centerEyeCamera;
+    public GameObject orbPrefab;
+    public List<Orb> orbs;
 
     // Start is called before the first frame update
     void Start()
     {
+        orbs = new List<Orb>();
         /*
         //Check if there is at least one microphone connected  
         //Throw a warning message at the console if there isn't 
@@ -40,9 +42,18 @@ public class SceneController : MonoBehaviour
             //...meaning 44100 Hz can be used as the recording sampling rate 
             if(minFreq == 0 && maxFreq == 0)    maxFreq = 44100; 
         }
+        if (OVRInput.Get(OVRInput.Button.One)) {
+            Instantiate(orbPrefab, centerEyeCamera.transform.position + Vector3.forward * 0.2f, Quaternion.identity);
+        }
     }
 
-    public (bool, int, int) GetMicDetails() {
-        return (micConnected, minFreq, maxFreq);
+    public bool GetMicStatus() {
+        return micConnected;
+    }
+    public int GetMinFreq() {
+        return minFreq;
+    }
+    public int GetMaxFreq() {
+        return maxFreq;
     }
 }

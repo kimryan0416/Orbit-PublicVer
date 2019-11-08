@@ -450,6 +450,9 @@
  <Reference Include="UnityEditor.UI">
  <HintPath>/Users/ryankim/Desktop/project-2019-g04-orbit/Orbit - MVP/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
  </Reference>
+ <Reference Include="Unity.2D.Sprite.Editor">
+ <HintPath>/Users/ryankim/Desktop/project-2019-g04-orbit/Orbit - MVP/Library/ScriptAssemblies/Unity.2D.Sprite.Editor.dll</HintPath>
+ </Reference>
  <Reference Include="UnityEngine">
  <HintPath>/Applications/2019.2.10f1/Unity.app/Contents/Managed/UnityEngine/UnityEngine.dll</HintPath>
  </Reference>

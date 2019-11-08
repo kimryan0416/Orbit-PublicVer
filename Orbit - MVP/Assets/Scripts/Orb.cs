@@ -17,6 +17,8 @@ public class Orb : MonoBehaviour
     private bool recording;
     private AudioSource aud;
     private Light lightComp;
+    private ParticleSystem particles;
+    private ParticleSystem.MainModule particlesMain;
     public OVRInput.Button shootingButton;
     private bool isTriggered;
     private bool isGrabbed;
@@ -32,6 +34,8 @@ public class Orb : MonoBehaviour
         rendererRef = this.GetComponent<Renderer>();
         aud = this.GetComponent<AudioSource>();
         lightComp = pointLight.GetComponent<Light>();
+        particles = this.GetComponent<ParticleSystem>();
+        particlesMain = particles.main;
 
         recording = false;
         isTriggered = false;
@@ -57,7 +61,7 @@ public class Orb : MonoBehaviour
         if (OVRInput.GetUp(shootingButton,grabbableRef.grabbedBy.GetController())) isTriggered = false;
         
         if (isGrabbed) {
-            Destroy(buttonCanvas);
+            buttonCanvas.SetActive(false);
             OVRInput.SetControllerVibration (frequency,amplitude,grabbableRef.grabbedBy.GetController());
         } else {
             OVRInput.SetControllerVibration (0,0,grabbableRef.grabbedBy.GetController());
@@ -102,6 +106,7 @@ public class Orb : MonoBehaviour
     public void SetColor(Color c) {
         //rendererRef.material.SetColor("_Color", c);
         lightComp.color = c;
+        particlesMain.startColor = c;
     }
     public bool GetTriggered() {
         return isTriggered;

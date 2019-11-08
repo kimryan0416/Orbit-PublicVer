@@ -42,7 +42,7 @@ public class SceneController : MonoBehaviour
         if (OVRInput.Get(OVRInput.Button.One)) {
             //GameObject newOrb = Instantiate(orbPrefab, centerEyeCamera.transform.position + Vector3.forward * 0.2f, Quaternion.identity);
             //orbs.Add(newOrb);
-            curOrb.transform.position = Vector3.SmoothDamp(curOrb.transform.position, frontOfAvatar.transform.position + Vector3.forward * 0.2f + Vector3.up * -0.2f, ref curOrbVelocity, 0.3f);
+            curOrb.transform.position = Vector3.SmoothDamp(curOrb.transform.position, frontOfAvatar.transform.position + Vector3.forward * 0.2f + Vector3.up * -0.2f, ref curOrbVelocity, 1f);
             curOrb.GetComponent<Rigidbody>().velocity = curOrbVelocity;
         }
         

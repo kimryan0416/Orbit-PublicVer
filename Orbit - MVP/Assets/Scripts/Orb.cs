@@ -12,13 +12,15 @@ public class Orb : MonoBehaviour
     private OVRGrabbable grabbableRef;
     private Renderer rendererRef;
     public GameObject buttonCanvas;
-    public Button recordButton;
+    public GameObject pointLight;
     
     private bool recording;
     private AudioSource aud;
+    private Light lightComp;
     public OVRInput.Button shootingButton;
     private bool isTriggered;
     private bool isGrabbed;
+    public float frequency, amplitude;
 
     //private IEnumerator coroutine;
 
@@ -29,10 +31,13 @@ public class Orb : MonoBehaviour
         grabbableRef = this.GetComponent<OVRGrabbable>();
         rendererRef = this.GetComponent<Renderer>();
         aud = this.GetComponent<AudioSource>();
+        lightComp = pointLight.GetComponent<Light>();
+
         recording = false;
         isTriggered = false;
         isGrabbed = false;
-        SetColor(Color.red);
+        SetColor(Color.yellow);
+
         /*
         if (!SC.GetMicStatus()) {
             SetColor(Color.red);
@@ -50,6 +55,14 @@ public class Orb : MonoBehaviour
         isGrabbed = grabbableRef.isGrabbed;
         if (OVRInput.GetDown(shootingButton,grabbableRef.grabbedBy.GetController())) isTriggered = true;
         if (OVRInput.GetUp(shootingButton,grabbableRef.grabbedBy.GetController())) isTriggered = false;
+        
+        if (isGrabbed) {
+            Destroy(buttonCanvas);
+            OVRInput.SetControllerVibration (frequency,amplitude,grabbableRef.grabbedBy.GetController());
+        } else {
+            OVRInput.SetControllerVibration (0,0,grabbableRef.grabbedBy.GetController());
+        }
+         
         /*
         if (OVRInput.GetDown(shootingButton,grabbableRef.grabbedBy.GetController()) && !isTriggered) isTriggered = true;
         if (OVRInput.GetUp(shootingButton,grabbableRef.grabbedBy.GetController()) && isTriggered) isTriggered = false;
@@ -87,7 +100,8 @@ public class Orb : MonoBehaviour
         return SC;
     }
     public void SetColor(Color c) {
-        rendererRef.material.SetColor("_Color", c);
+        //rendererRef.material.SetColor("_Color", c);
+        lightComp.color = c;
     }
     public bool GetTriggered() {
         return isTriggered;

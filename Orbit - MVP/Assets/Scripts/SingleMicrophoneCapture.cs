@@ -64,7 +64,7 @@ public class SingleMicrophoneCapture : MonoBehaviour
 					}
 				}
 				else {
-					orb.SetColor(Color.green);
+					orb.SetColor(Color.yellow);
 					if (Microphone.IsRecording(null)) {
 						Microphone.End(null); //Stop the audio recording
 						goAudioSource.Play(); //Playback the recorded audio

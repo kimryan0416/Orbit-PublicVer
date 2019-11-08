@@ -8,6 +8,7 @@ public class SceneController : MonoBehaviour
     private bool micConnected = false;      //A boolean that flags whether there's a connected microphone 
     private int minFreq, maxFreq;    //The minimum and maximum available recording frequencies  
     public Camera centerEyeCamera;
+    public GameObject frontOfAvatar;
     public GameObject orbPrefab;
     public List<GameObject> orbs;
     private bool isTriggered;
@@ -19,6 +20,8 @@ public class SceneController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        UnityEngine.XR.XRDevice.SetTrackingSpaceType(UnityEngine.XR.TrackingSpaceType.RoomScale);
+
         orbs = new List<GameObject>();
         goAudioSource = this.GetComponent<AudioSource>();
 
@@ -39,7 +42,7 @@ public class SceneController : MonoBehaviour
         if (OVRInput.Get(OVRInput.Button.One)) {
             //GameObject newOrb = Instantiate(orbPrefab, centerEyeCamera.transform.position + Vector3.forward * 0.2f, Quaternion.identity);
             //orbs.Add(newOrb);
-            curOrb.transform.position = Vector3.SmoothDamp(curOrb.transform.position, centerEyeCamera.transform.position + Vector3.forward * 0.2f + Vector3.up * -0.2f, ref curOrbVelocity, 0.3f);
+            curOrb.transform.position = Vector3.SmoothDamp(curOrb.transform.position, frontOfAvatar.transform.position + Vector3.forward * 0.2f + Vector3.up * -0.2f, ref curOrbVelocity, 0.3f);
             curOrb.GetComponent<Rigidbody>().velocity = curOrbVelocity;
         }
         

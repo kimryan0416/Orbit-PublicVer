@@ -384,7 +384,7 @@ ScriptsOnlyBuild:
     className: CharacterCameraConstraint
   - hash:
       serializedVersion: 2
-      Hash: d6ff8d7469d607abbfab539e49fc4543
+      Hash: 6d3e6c52a8f48cdbba2f807f60264c66
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Orb
@@ -786,7 +786,7 @@ ScriptsOnlyBuild:
     className: TeleportOrientationHandlerHMD
   - hash:
       serializedVersion: 2
-      Hash: f559d51e2dc7d5d987493de40b8448f4
+      Hash: e7ff24f0b882fbace805422de67a8212
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: SceneController

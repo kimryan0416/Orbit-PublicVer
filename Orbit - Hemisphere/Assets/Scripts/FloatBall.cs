@@ -23,14 +23,18 @@ public class FloatBall : MonoBehaviour
 
     void Start()
     {
+        // Get the Light component from a pointLight of an orb
         lt = pointLight.GetComponent<Light>();
+        // range of the point light
         originalRange = lt.range;
-        Debug.Log("first pos" + sphere.transform.position);
+        
+        //Debug.Log("first pos" + sphere.transform.position);
+        
+        // Get the original distance b/w the  main camera and the current sphere
         OriginalDist = Vector3.Distance(maincam.transform.position, sphere.transform.position);
-        //Vector3 rand = new Vector3(Random.Range(-2.0f, 2.0f), Random.Range(-2.0f, 2.0f), Random.Range(-2.0f, 2.0f));
-        sphere.GetComponent<Rigidbody>().velocity = new Vector3(0, 2, 0);  //RANDOMIZE VELOCITY
-        //sphere.GetComponent<Rigidbody>().velocity = rand;
 
+        // get the rigidbody of the sphere, RANDOMIZE VELOCITY
+        sphere.GetComponent<Rigidbody>().velocity = new Vector3(0, 2, 0);
     }
 
     void Update()

@@ -8,6 +8,7 @@ public class NewOrb : MonoBehaviour
     #region Publics
     public GameObject m_PointLight;
     public GameObject m_EmptyIndicator;
+    public GameObject m_Crosshairs;
     public OVRInput.RawAxis1D m_StartAudioButton;
     public OVRInput.RawButton m_PlayAudioButton;
     #endregion
@@ -22,7 +23,7 @@ public class NewOrb : MonoBehaviour
     private bool vibrationStarted = false;
     private int minFreq, maxFreq;
     public bool isRecording = false;
-
+    private bool isDeactivated = false;
     private Color m_Color;
 
     private Game m_Game;
@@ -42,8 +43,11 @@ public class NewOrb : MonoBehaviour
 
     private void Update() {
 
+        if (isDeactivated)  return;
+
         // check if currently grabbed - if not grabbed, return and set color to default white
         CheckGrabbed();
+
         if (m_GrabbedBy == OVRInput.Controller.None) {
             m_Color = Color.white;
             return;
@@ -132,7 +136,6 @@ public class NewOrb : MonoBehaviour
         m_Game.SetControllerStatus(m_GrabbedBy, true);
         m_AudioSource.clip = Microphone.Start(null, true, 20, maxFreq);
     }
-
     public void EndRecording() {
         isRecording = false;
         m_Game.SetControllerStatus(m_GrabbedBy, false);
@@ -142,7 +145,6 @@ public class NewOrb : MonoBehaviour
     public bool CheckRecordingStatus() {
         return isRecording;
     }
-
     public void SetColor(Color c) {
         m_Light.color = c;
         m_ParticlesMain.startColor = c;
@@ -151,13 +153,19 @@ public class NewOrb : MonoBehaviour
         m_AudioSource.clip = clip;
     }
     public void ToggleAudio() {
-        if (m_AudioSource.isPlaying) {
-            m_AudioSource.Stop();
-        } else {
-            m_AudioSource.Play();
-        }
+        if (m_AudioSource.isPlaying) {  m_AudioSource.Stop();   } 
+        else {  m_AudioSource.Play();   }
     }
     public AudioClip GetAudioClip() {
         return m_AudioSource.clip;
+    }
+    public void Deactivate(){ 
+        m_Light.enabled = false;
+        m_Crosshairs.GetComponent<GrabbableCrosshair>().enabled = false;
+        m_EmptyIndicator.GetComponent<MeshRenderer>().enabled = false;
+        isDeactivated = true;
+    }
+    public bool GetIsDeactivated() {
+        return isDeactivated;
     }
 }

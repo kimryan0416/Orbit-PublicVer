@@ -6,6 +6,9 @@ using UnityEngine.Events;
 public class Game : MonoBehaviour
 {
     #region Globals
+    public GameObject starPrefab;
+    private bool isCreatingStar = false;
+    public Transform StarBirthLocation;
     public bool m_InputActive = true;   // PUBLIC - either enables or disables all inputs
     private bool micConnected;          // tracks if mic is connected to Oculus or not
     private int minFreq, maxFreq;       // the minimum and maximum frequency of the current microphone
@@ -73,9 +76,11 @@ public class Game : MonoBehaviour
         return maxFreq;
     }
     public void AddStar(GameObject star) {
+        if (m_Stars.Contains(star)) return;
         m_Stars.Add(star);
     }
     public void RemoveStar(GameObject star) {
+        if (!m_Stars.Contains(star)) return;
         m_Stars.Remove(star);
     }
     public void SetControllerStatus(OVRInput.Controller controller, bool status) {
@@ -97,6 +102,10 @@ public class Game : MonoBehaviour
 
         return toReturn;
 
+    }
+
+    public void CreateStar() {
+        Instantiate(starPrefab, StarBirthLocation.position, Quaternion.identity);
     }
 
 }

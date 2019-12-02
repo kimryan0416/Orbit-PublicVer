@@ -32,7 +32,7 @@ namespace OculusSampleFramework
         [SerializeField]
         float m_TargetedScale;    // default = 2
         float m_CurrentTargetScale;   // somewhere between m_OriginalScale and m_TargetedScale;
-        float m_OriginalScale = 1;    // default = 1;
+        float m_OriginalScale = 0;    // default = 1;
 
         Vector3 m_LocalScale;
 

@@ -41,16 +41,6 @@ public class Orb : MonoBehaviour
         isTriggered = false;
         isGrabbed = false;
         SetColor(Color.yellow);
-
-        /*
-        if (!SC.GetMicStatus()) {
-            SetColor(Color.red);
-        } else {
-            SetColor(Color.yellow);
-        }
-        */
-        //coroutine = GetMicCount();
-        //StartCoroutine(coroutine);
     }
 
     // Update is called once per frame

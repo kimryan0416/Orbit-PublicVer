@@ -337,7 +337,9 @@
      <Compile Include="Assets\Oculus\VoiceMod\Scripts\OVRVoiceMod.cs" />
      <Compile Include="Assets\Oculus\VoiceMod\Scripts\OVRVoiceModContext.cs" />
      <Compile Include="Assets\Scripts\AudioTest.cs" />
+     <Compile Include="Assets\Scripts\Custom_Controller.cs" />
      <Compile Include="Assets\Scripts\Game.cs" />
+     <Compile Include="Assets\Scripts\HandCanvasController.cs" />
      <Compile Include="Assets\Scripts\NewOrb.cs" />
      <Compile Include="Assets\Scripts\Orb.cs" />
      <Compile Include="Assets\Scripts\Pointer.cs" />

@@ -9,7 +9,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{7FCF49AB-7556-EB7C-1CB5-9DFC7A6185C2}</ProjectGuid>
+    <ProjectGuid>{9DE406AE-25BC-AFA3-1A85-906F06740EAF}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Oculus.VR</AssemblyName>
@@ -117,10 +117,10 @@
      <None Include="Assets\Oculus\VR\Resources\Underlay Impostor.shader" />
      <None Include="Assets\Oculus\VR\Plugins\placeholder.txt" />
  <Reference Include="UnityEditor.UI">
- <HintPath>/Users/ryankim/Desktop/project-2019-g04-orbit/Orbit - MVP/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
+ <HintPath>/Users/ryankim/Desktop/project-2019-g04-orbit/Orbit-Final/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.UI">
- <HintPath>/Users/ryankim/Desktop/project-2019-g04-orbit/Orbit - MVP/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
+ <HintPath>/Users/ryankim/Desktop/project-2019-g04-orbit/Orbit-Final/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine">
  <HintPath>/Applications/2019.2.10f1/Unity.app/Contents/Managed/UnityEngine/UnityEngine.dll</HintPath>

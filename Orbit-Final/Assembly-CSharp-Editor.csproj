@@ -9,7 +9,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{0FC5A221-CD74-FE03-8FD2-DC0100E029DA}</ProjectGuid>
+    <ProjectGuid>{75D07A46-E958-129E-6608-A5F44173755F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp-Editor</AssemblyName>
@@ -72,40 +72,40 @@
      <Compile Include="Assets\Oculus\Spatializer\editor\ONSPPropagationSerializationManager.cs" />
      <Compile Include="Assets\Oculus\Spatializer\editor\ONSPReflectionCustomGUI.cs" />
  <Reference Include="UnityEditor.TestRunner">
- <HintPath>/Users/ryankim/Desktop/project-2019-g04-orbit/Orbit - MVP/Library/ScriptAssemblies/UnityEditor.TestRunner.dll</HintPath>
+ <HintPath>/Users/ryankim/Desktop/project-2019-g04-orbit/Orbit-Final/Library/ScriptAssemblies/UnityEditor.TestRunner.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.TestRunner">
- <HintPath>/Users/ryankim/Desktop/project-2019-g04-orbit/Orbit - MVP/Library/ScriptAssemblies/UnityEngine.TestRunner.dll</HintPath>
+ <HintPath>/Users/ryankim/Desktop/project-2019-g04-orbit/Orbit-Final/Library/ScriptAssemblies/UnityEngine.TestRunner.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Timeline.Editor">
- <HintPath>/Users/ryankim/Desktop/project-2019-g04-orbit/Orbit - MVP/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
+ <HintPath>/Users/ryankim/Desktop/project-2019-g04-orbit/Orbit-Final/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.VSCode.Editor">
- <HintPath>/Users/ryankim/Desktop/project-2019-g04-orbit/Orbit - MVP/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
+ <HintPath>/Users/ryankim/Desktop/project-2019-g04-orbit/Orbit-Final/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.TextMeshPro.Editor">
- <HintPath>/Users/ryankim/Desktop/project-2019-g04-orbit/Orbit - MVP/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+ <HintPath>/Users/ryankim/Desktop/project-2019-g04-orbit/Orbit-Final/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.UI">
- <HintPath>/Users/ryankim/Desktop/project-2019-g04-orbit/Orbit - MVP/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
+ <HintPath>/Users/ryankim/Desktop/project-2019-g04-orbit/Orbit-Final/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Timeline">
- <HintPath>/Users/ryankim/Desktop/project-2019-g04-orbit/Orbit - MVP/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
+ <HintPath>/Users/ryankim/Desktop/project-2019-g04-orbit/Orbit-Final/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
  </Reference>
  <Reference Include="Unity.CollabProxy.Editor">
- <HintPath>/Users/ryankim/Desktop/project-2019-g04-orbit/Orbit - MVP/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
+ <HintPath>/Users/ryankim/Desktop/project-2019-g04-orbit/Orbit-Final/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Rider.Editor">
- <HintPath>/Users/ryankim/Desktop/project-2019-g04-orbit/Orbit - MVP/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
- </Reference>
- <Reference Include="Unity.TextMeshPro">
- <HintPath>/Users/ryankim/Desktop/project-2019-g04-orbit/Orbit - MVP/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
- </Reference>
- <Reference Include="UnityEditor.UI">
- <HintPath>/Users/ryankim/Desktop/project-2019-g04-orbit/Orbit - MVP/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
+ <HintPath>/Users/ryankim/Desktop/project-2019-g04-orbit/Orbit-Final/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.2D.Sprite.Editor">
- <HintPath>/Users/ryankim/Desktop/project-2019-g04-orbit/Orbit - MVP/Library/ScriptAssemblies/Unity.2D.Sprite.Editor.dll</HintPath>
+ <HintPath>/Users/ryankim/Desktop/project-2019-g04-orbit/Orbit-Final/Library/ScriptAssemblies/Unity.2D.Sprite.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.TextMeshPro">
+ <HintPath>/Users/ryankim/Desktop/project-2019-g04-orbit/Orbit-Final/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.UI">
+ <HintPath>/Users/ryankim/Desktop/project-2019-g04-orbit/Orbit-Final/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine">
  <HintPath>/Applications/2019.2.10f1/Unity.app/Contents/Managed/UnityEngine/UnityEngine.dll</HintPath>
@@ -303,7 +303,7 @@
  <HintPath>/Applications/2019.2.10f1/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll</HintPath>
  </Reference>
  <Reference Include="nunit.framework">
- <HintPath>/Users/ryankim/Desktop/project-2019-g04-orbit/Orbit - MVP/Library/PackageCache/com.unity.ext.nunit@1.0.0/net35/unity-custom/nunit.framework.dll</HintPath>
+ <HintPath>/Users/ryankim/Desktop/project-2019-g04-orbit/Orbit-Final/Library/PackageCache/com.unity.ext.nunit@1.0.0/net35/unity-custom/nunit.framework.dll</HintPath>
  </Reference>
  <Reference Include="mscorlib">
  <HintPath>/Applications/2019.2.10f1/Unity.app/Contents/MonoBleedingEdge/lib/mono/4.7.1-api/mscorlib.dll</HintPath>
@@ -662,19 +662,19 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Assembly-CSharp.csproj">
-      <Project>{0F5A62F1-9DFD-8850-04E8-0FA58FC14954}</Project>
+      <Project>{74C9E63C-E843-4CA0-5579-893D811A8794}</Project>
       <Name>Assembly-CSharp</Name>
     </ProjectReference>
     <ProjectReference Include="Oculus.VR.Editor.csproj">
-      <Project>{D6D29919-6F92-EB70-9AF6-30A8E201ACB7}</Project>
+      <Project>{7D1ED09C-90BF-1CCD-8ACB-994C40FE91DE}</Project>
       <Name>Oculus.VR.Editor</Name>
     </ProjectReference>
     <ProjectReference Include="Oculus.VR.Scripts.Editor.csproj">
-      <Project>{082C9B92-4FD8-BAC2-0DE9-3363F5FF839C}</Project>
+      <Project>{F5EF2922-36AA-4F67-4ECC-5837492A8CBB}</Project>
       <Name>Oculus.VR.Scripts.Editor</Name>
     </ProjectReference>
     <ProjectReference Include="Oculus.VR.csproj">
-      <Project>{7FCF49AB-7556-EB7C-1CB5-9DFC7A6185C2}</Project>
+      <Project>{9DE406AE-25BC-AFA3-1A85-906F06740EAF}</Project>
       <Name>Oculus.VR</Name>
     </ProjectReference>
   </ItemGroup>

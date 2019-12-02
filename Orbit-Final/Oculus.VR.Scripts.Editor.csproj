@@ -9,7 +9,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{082C9B92-4FD8-BAC2-0DE9-3363F5FF839C}</ProjectGuid>
+    <ProjectGuid>{F5EF2922-36AA-4F67-4ECC-5837492A8CBB}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Oculus.VR.Scripts.Editor</AssemblyName>
@@ -50,16 +50,16 @@
      <None Include="Assets\Oculus\VR\Scripts\Editor\Oculus.VR.Scripts.Editor.asmdef" />
      <None Include="Assets\Oculus\VR\Scripts\Editor\OVROverlayDestRectEditor.shader" />
  <Reference Include="UnityEditor.UI">
- <HintPath>/Users/ryankim/Desktop/project-2019-g04-orbit/Orbit - MVP/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
+ <HintPath>/Users/ryankim/Desktop/project-2019-g04-orbit/Orbit-Final/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.UI">
- <HintPath>/Users/ryankim/Desktop/project-2019-g04-orbit/Orbit - MVP/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
+ <HintPath>/Users/ryankim/Desktop/project-2019-g04-orbit/Orbit-Final/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.TestRunner">
- <HintPath>/Users/ryankim/Desktop/project-2019-g04-orbit/Orbit - MVP/Library/ScriptAssemblies/UnityEditor.TestRunner.dll</HintPath>
+ <HintPath>/Users/ryankim/Desktop/project-2019-g04-orbit/Orbit-Final/Library/ScriptAssemblies/UnityEditor.TestRunner.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.TestRunner">
- <HintPath>/Users/ryankim/Desktop/project-2019-g04-orbit/Orbit - MVP/Library/ScriptAssemblies/UnityEngine.TestRunner.dll</HintPath>
+ <HintPath>/Users/ryankim/Desktop/project-2019-g04-orbit/Orbit-Final/Library/ScriptAssemblies/UnityEngine.TestRunner.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine">
  <HintPath>/Applications/2019.2.10f1/Unity.app/Contents/Managed/UnityEngine/UnityEngine.dll</HintPath>
@@ -257,7 +257,7 @@
  <HintPath>/Applications/2019.2.10f1/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll</HintPath>
  </Reference>
  <Reference Include="nunit.framework">
- <HintPath>/Users/ryankim/Desktop/project-2019-g04-orbit/Orbit - MVP/Library/PackageCache/com.unity.ext.nunit@1.0.0/net35/unity-custom/nunit.framework.dll</HintPath>
+ <HintPath>/Users/ryankim/Desktop/project-2019-g04-orbit/Orbit-Final/Library/PackageCache/com.unity.ext.nunit@1.0.0/net35/unity-custom/nunit.framework.dll</HintPath>
  </Reference>
  <Reference Include="mscorlib">
  <HintPath>/Applications/2019.2.10f1/Unity.app/Contents/MonoBleedingEdge/lib/mono/4.7.1-api/mscorlib.dll</HintPath>
@@ -616,11 +616,11 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Oculus.VR.csproj">
-      <Project>{7FCF49AB-7556-EB7C-1CB5-9DFC7A6185C2}</Project>
+      <Project>{9DE406AE-25BC-AFA3-1A85-906F06740EAF}</Project>
       <Name>Oculus.VR</Name>
     </ProjectReference>
     <ProjectReference Include="Oculus.VR.Editor.csproj">
-      <Project>{D6D29919-6F92-EB70-9AF6-30A8E201ACB7}</Project>
+      <Project>{7D1ED09C-90BF-1CCD-8ACB-994C40FE91DE}</Project>
       <Name>Oculus.VR.Editor</Name>
     </ProjectReference>
   </ItemGroup>

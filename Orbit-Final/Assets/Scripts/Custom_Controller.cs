@@ -12,7 +12,7 @@ public class Custom_Controller : MonoBehaviour
     public OVRInput.RawButton CreateDeleteButton;
     public OVRInput.RawAxis1D GripButton;
     public HandCanvasController m_HandCanvasController;
-    public Pointer raycastPointer;
+    private Pointer raycastPointer;
     public float HoldTimeThreshold;
 
     private bool RecordAndPoint_TimeStarted = false;
@@ -24,12 +24,15 @@ public class Custom_Controller : MonoBehaviour
     private DistanceGrabber m_DistanceGrabber;
     private DistanceGrabbable HeldObject;
     private NewOrb HeldObject_NewOrb;
+    private NewOrb HoveredObject;
+    private bool isPulled;
 
     private void Awake()
     {
         m_DistanceGrabber = this.GetComponent<DistanceGrabber>();
         m_Controller = m_DistanceGrabber.GetController();
         m_HandCanvasController.InitializeRecordSlider(HoldTimeThreshold);
+        raycastPointer = this.GetComponent<Pointer>();
         //m_HandCanvasController.InitializeDeleteSlider(HoldTimeThreshold);
     }
 
@@ -79,18 +82,22 @@ public class Custom_Controller : MonoBehaviour
             // NOTE: PlayButton doesn't do anything
 
             // 1)
-            if (OVRInput.Get(RecordAndPointButton, m_Controller) > 0.1f && !raycastPointer.GetStatus()) {   raycastPointer.TurnOn();  }
-            if (OVRInput.Get(RecordAndPointButton, m_Controller) <= 0.1f && raycastPointer.GetStatus()) {   raycastPointer.TurnOff();   }
+            /*
+            if (OVRInput.GetDown(PlayButton, m_Controller) && !raycastPointer.GetStatus()) {   raycastPointer.TurnOn();  }
+            if (OVRInput.GetUp(PlayButton, m_Controller) && raycastPointer.GetStatus()) {   raycastPointer.TurnOff();   }
+            */
 
             // 2) 
-            /*
-            if (OVRInput.Get(GripButton, m_Controller) > 0.1f && HeldObject == null) {
-                GameObject potentialHit = raycastPointer.GetHit();
-                if (potentialHit != null) {
-                    m_DistanceGrabber.SetGrabbed(potentialHit.GetComponent<DistanceGrabbable>());   
+            if (OVRInput.Get(GripButton, m_Controller) > 0.1f && raycastPointer.GetHit() != null) {
+                HoveredObject = raycastPointer.GetHit();
+                float dist = Vector3.Distance(raycastPointer.GetReturnPosition().position, HoveredObject.transform.position);
+                if (dist >= 3f && !isPulled) {
+                //if (!isPulled) {
+                //    StartCoroutine(PullBack());
+                //}
+                    HoveredObject.gameObject.transform.position = Vector3.Lerp(HoveredObject.gameObject.transform.position, raycastPointer.GetReturnPosition().position, Time.deltaTime * 3f);
                 }
             }
-            */
 
             // 3)
             if (OVRInput.GetDown(CreateDeleteButton,m_Controller)) {
@@ -133,6 +140,13 @@ public class Custom_Controller : MonoBehaviour
             HeldObject_NewOrb.EndRecording();
             m_Game.AddStar(HeldObject.gameObject);
         }
+    }
+
+    private IEnumerator PullBack() {
+        isPulled = true;
+        HoveredObject.GetComponent<Rigidbody>().AddForce((raycastPointer.GetReturnPosition().position - HoveredObject.transform.position).normalized * 10f * Time.smoothDeltaTime);
+        yield return new WaitForSeconds(1f);
+        isPulled = false;
     }
 
     /*

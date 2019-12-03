@@ -104,91 +104,91 @@ ScriptsOnlyBuild:
     - Class: 109
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 9824}
+      Script: {instanceID: 9826}
     - Class: 114
-      Script: {instanceID: 9894}
-    - Class: 114
-      Script: {instanceID: 9920}
+      Script: {instanceID: 9896}
     - Class: 114
       Script: {instanceID: 9922}
     - Class: 114
-      Script: {instanceID: 10022}
+      Script: {instanceID: 9924}
     - Class: 114
-      Script: {instanceID: 10046}
+      Script: {instanceID: 10024}
     - Class: 114
-      Script: {instanceID: 10122}
+      Script: {instanceID: 10048}
     - Class: 114
-      Script: {instanceID: 10144}
+      Script: {instanceID: 10124}
     - Class: 114
-      Script: {instanceID: 10178}
+      Script: {instanceID: 10146}
     - Class: 114
-      Script: {instanceID: 10258}
+      Script: {instanceID: 10180}
     - Class: 114
-      Script: {instanceID: 10370}
+      Script: {instanceID: 10260}
     - Class: 114
-      Script: {instanceID: 10544}
+      Script: {instanceID: 10372}
     - Class: 114
-      Script: {instanceID: 10572}
+      Script: {instanceID: 10546}
     - Class: 114
-      Script: {instanceID: 10598}
+      Script: {instanceID: 10574}
     - Class: 114
-      Script: {instanceID: 10620}
+      Script: {instanceID: 10600}
     - Class: 114
-      Script: {instanceID: 10674}
+      Script: {instanceID: 10622}
     - Class: 114
-      Script: {instanceID: 10690}
+      Script: {instanceID: 10634}
     - Class: 114
-      Script: {instanceID: 10714}
+      Script: {instanceID: 10678}
     - Class: 114
-      Script: {instanceID: 10794}
+      Script: {instanceID: 10694}
     - Class: 114
-      Script: {instanceID: 10918}
+      Script: {instanceID: 10718}
     - Class: 114
-      Script: {instanceID: 10930}
+      Script: {instanceID: 10798}
     - Class: 114
-      Script: {instanceID: 11018}
+      Script: {instanceID: 10922}
     - Class: 114
-      Script: {instanceID: 11042}
+      Script: {instanceID: 10934}
+    - Class: 114
+      Script: {instanceID: 11022}
     - Class: 114
       Script: {instanceID: 11046}
     - Class: 114
       Script: {instanceID: 11050}
     - Class: 114
-      Script: {instanceID: 11128}
+      Script: {instanceID: 11054}
     - Class: 114
-      Script: {instanceID: 11182}
+      Script: {instanceID: 11132}
     - Class: 114
-      Script: {instanceID: 11192}
+      Script: {instanceID: 11186}
     - Class: 114
-      Script: {instanceID: 11474}
+      Script: {instanceID: 11196}
     - Class: 114
-      Script: {instanceID: 11522}
+      Script: {instanceID: 11478}
     - Class: 114
-      Script: {instanceID: 11548}
+      Script: {instanceID: 11526}
     - Class: 114
-      Script: {instanceID: 11566}
+      Script: {instanceID: 11552}
     - Class: 114
       Script: {instanceID: 11570}
     - Class: 114
-      Script: {instanceID: 11780}
+      Script: {instanceID: 11574}
     - Class: 114
-      Script: {instanceID: 11838}
+      Script: {instanceID: 11784}
     - Class: 114
-      Script: {instanceID: 11914}
+      Script: {instanceID: 11842}
     - Class: 114
-      Script: {instanceID: 11964}
+      Script: {instanceID: 11918}
     - Class: 114
-      Script: {instanceID: 12158}
+      Script: {instanceID: 11968}
     - Class: 114
-      Script: {instanceID: 12310}
+      Script: {instanceID: 12162}
     - Class: 114
-      Script: {instanceID: 12456}
+      Script: {instanceID: 12314}
     - Class: 114
-      Script: {instanceID: 12500}
+      Script: {instanceID: 12460}
     - Class: 114
-      Script: {instanceID: 38066}
+      Script: {instanceID: 12482}
     - Class: 114
-      Script: {instanceID: 83352}
+      Script: {instanceID: 12506}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 120
@@ -678,6 +678,12 @@ ScriptsOnlyBuild:
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: OvrAvatarSettings
+  - hash:
+      serializedVersion: 2
+      Hash: 0e8077cace9fad366b2ba0be1bc46ff3
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: Custom_Controller
   - hash:
       serializedVersion: 2
       Hash: 5777c70a25f193ad387a5581565b81b9
@@ -1778,6 +1784,12 @@ ScriptsOnlyBuild:
     className: Toggle
   - hash:
       serializedVersion: 2
+      Hash: fc6818728fd13d40ba854049bd3c12a7
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: HandCanvasController
+  - hash:
+      serializedVersion: 2
       Hash: 8220b46879dc5e37db1b940c938f5744
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
@@ -1832,16 +1844,10 @@ ScriptsOnlyBuild:
     className: PlayableTrack
   - hash:
       serializedVersion: 2
-      Hash: 0f0ce07141e2f713382bdc0d86b8b67b
+      Hash: 9d5ba27a24a3147c1b0f64c0c260e20a
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
-    className: Custom_Controller
-  - hash:
-      serializedVersion: 2
-      Hash: fc6818728fd13d40ba854049bd3c12a7
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: HandCanvasController
+    className: HoverController
   platform: 13
   scenePathNames:
   - Assets/Scenes/SampleScene.unity

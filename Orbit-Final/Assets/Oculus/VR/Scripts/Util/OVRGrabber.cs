@@ -375,4 +375,8 @@ public class OVRGrabber : MonoBehaviour
             GrabbableRelease(Vector3.zero, Vector3.zero);
         }
     }
+
+    public void SetGrabbed(OVRGrabbable grabbable) {
+        m_grabbedObj = grabbable;
+    }
 }

@@ -10,8 +10,9 @@ public class Custom_Controller : MonoBehaviour
     public OVRInput.RawAxis1D RecordAndPointButton;
     public OVRInput.RawButton PlayButton;
     public OVRInput.RawButton CreateDeleteButton;
+    public OVRInput.RawAxis1D GripButton;
     public HandCanvasController m_HandCanvasController;
-
+    public Pointer raycastPointer;
     public float HoldTimeThreshold;
 
     private bool RecordAndPoint_TimeStarted = false;
@@ -73,12 +74,27 @@ public class Custom_Controller : MonoBehaviour
         else {
             // If an object is NOT being held, then there are several things to do:
             // 1) If RecordAndPoint (default = Index Trigger) is clicked and held, a raycast is sent out for easier detection
-            // 2) PlayButton doesn't do anything
+            // 2) If grip is held and there's a raycast hit detected from pointer...
             // 3) If CreateDeleteButton (default = B/Y button) is clicked and held for some time, then a new star is instantiated in front of the player.
+            // NOTE: PlayButton doesn't do anything
+
+            // 1)
+            if (OVRInput.Get(RecordAndPointButton, m_Controller) > 0.1f && !raycastPointer.GetStatus()) {   raycastPointer.TurnOn();  }
+            if (OVRInput.Get(RecordAndPointButton, m_Controller) <= 0.1f && raycastPointer.GetStatus()) {   raycastPointer.TurnOff();   }
+
+            // 2) 
+            /*
+            if (OVRInput.Get(GripButton, m_Controller) > 0.1f && HeldObject == null) {
+                GameObject potentialHit = raycastPointer.GetHit();
+                if (potentialHit != null) {
+                    m_DistanceGrabber.SetGrabbed(potentialHit.GetComponent<DistanceGrabbable>());   
+                }
+            }
+            */
 
             // 3)
             if (OVRInput.GetDown(CreateDeleteButton,m_Controller)) {
-                m_Game.CreateStar();
+                StartCoroutine(m_Game.CreateStar());
             }
         }
     }

@@ -13,6 +13,7 @@ public class Game : MonoBehaviour
     private bool micConnected;          // tracks if mic is connected to Oculus or not
     private int minFreq, maxFreq;       // the minimum and maximum frequency of the current microphone
     private List<GameObject> m_Stars = new List<GameObject>();  // Tracks all stars in the world
+    private bool creatingStar = false;
     #endregion
 
     #region Inputs
@@ -104,8 +105,13 @@ public class Game : MonoBehaviour
 
     }
 
-    public void CreateStar() {
-        Instantiate(starPrefab, StarBirthLocation.position, Quaternion.identity);
+    public IEnumerator CreateStar() {
+        if (!creatingStar) {
+            creatingStar = true;
+            Instantiate(starPrefab, StarBirthLocation.position, Quaternion.identity);
+            yield return new WaitForSeconds(1f);
+            creatingStar = false;
+        }
     }
 
 }

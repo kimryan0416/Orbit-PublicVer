@@ -5900,7 +5900,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 2
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &8401891725094078210
 MonoBehaviour:
@@ -6105,7 +6105,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_PointLight: {fileID: 6231191601097858844}
   m_EmptyIndicator: {fileID: 8401891725363377523}
-  m_Crosshairs: {fileID: 0}
+  m_Crosshairs: {fileID: 8401891724837794826}
   m_StartAudioButton: 3
   m_PlayAudioButton: 257
   isRecording: 0

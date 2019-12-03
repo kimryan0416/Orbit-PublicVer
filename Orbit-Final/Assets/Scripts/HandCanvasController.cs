@@ -34,6 +34,7 @@ public class HandCanvasController : MonoBehaviour
     public void InitializeRecordSlider(float threshold) {
         TimeThreshold = threshold;
         RecordSliderIU.maxValue = threshold * 100f;
+        DeactivateRecordSlider();
     }
     /*
     public void InitializeDeleteSlider(float threshold) {
@@ -48,12 +49,16 @@ public class HandCanvasController : MonoBehaviour
     }
     public void SetRecordSlider(float curTime) {
         RecordSliderIU.value = (curTime < TimeThreshold) ? curTime*100f : TimeThreshold*100f;
-        if (curTime >= TimeThreshold) RecordingText.SetActive(true);
+        if (curTime >= TimeThreshold) {
+            RecordingText.SetActive(true);
+            DefaultRecordText.SetActive(false);
+        }
     }
     public void DeactivateRecordSlider() {
         RecordSliderIU.gameObject.SetActive(false);
         RecordingText.SetActive(false);
         RecordSliderIU.value = 0;
+        DefaultRecordText.SetActive(true);
     }
     /*
     public void StartDeleting() {

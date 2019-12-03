@@ -12,6 +12,5 @@
 
 - Ryan Kim - [rk494@cornell.edu](rk494@cornell.edu) - kimryan0416
 - Vini Tripathii - [ut33@cornell.edu](ut33@cornell.edu) - ut33
-- [Insert your full name, Cornell email, GitHub handle]
-
+- Daniel Asper - [da494@cornell.edu](da494@cornell.edu) - dmasper
 

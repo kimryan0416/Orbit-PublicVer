@@ -4,39 +4,60 @@ using UnityEngine;
 using UnityEngine.UI;
 using OculusSampleFramework;
 
-public class Custom_Controller : MonoBehaviour
+public class New_Custom_Controller : MonoBehaviour
 {
-    public Game m_Game;
+    #region References
+    public Game m_Game;                                 // Ref to main game object
+    public HandCanvasController m_HandCanvasController; // Ref to canvas
+    private New_Pointer raycastPointer;                 // Ref to pointer
+    #endregion
+
+    #region OVR Inputs
+    public OVRInput.Controller m_Controller;            
     public OVRInput.RawAxis1D RecordAndPointButton;
     public OVRInput.RawButton PlayButton;
     public OVRInput.RawButton CreateDeleteButton;
     public OVRInput.RawAxis1D GripButton;
-    public HandCanvasController m_HandCanvasController;
-    private Pointer raycastPointer;
-    public float HoldTimeThreshold;
+    private Vector3 m_anchorOffsetPosition;
+    private Quaternion m_anchorOffsetRotation;
+    #endregion
 
+    #region Public Variables
+    public float HoldTimeThreshold;
+    public float forceStrength;
+    #endregion
+
+    #region Private Variables
+    private Star m_GrabbedObject = null;      // The object this controller is currently grabbing
+    Transform PointerTransform = null;              // The pointer's transformation reference 
+    #endregion
+
+    /*
     private bool RecordAndPoint_TimeStarted = false;
     private float RecordAndPoint_StartTime = 0.0f;
     private bool CurrentlyDeleting = false;
     private float CurrentlyDeleting_StartTime = 0.0f;
 
-    private OVRInput.Controller m_Controller;
-    private DistanceGrabber m_DistanceGrabber;
-    private DistanceGrabbable HeldObject;
+    //private OVRInput.Controller m_Controller;
+    private OVRGrabber m_OVRGrabber;
+    private OVRGrabbable HeldObject;
     private NewOrb HeldObject_NewOrb;
     private NewOrb HoveredObject;
     private bool isPulled;
+    */
 
     private void Awake()
     {
-        m_DistanceGrabber = this.GetComponent<DistanceGrabber>();
-        m_Controller = m_DistanceGrabber.GetController();
-        m_HandCanvasController.InitializeRecordSlider(HoldTimeThreshold);
-        raycastPointer = this.GetComponent<Pointer>();
+        //m_OVRGrabber = this.GetComponent<OVRGrabber>();
+        //m_Controller = m_OVRGrabber.GetController();
+        m_HandCanvasController.InitializeRecordSlider(HoldTimeThreshold);   // Initialize the record slider with the hold time threshold
+        raycastPointer = this.GetComponent<New_Pointer>();                      // get the pointer
+
+        m_anchorOffsetPosition = transform.localPosition;
+        m_anchorOffsetRotation = transform.localRotation;
         //m_HandCanvasController.InitializeDeleteSlider(HoldTimeThreshold);
     }
 
-    // Update is called once per frame
     private void Update()
     {
         // Check mic status - if no mic attached, end here
@@ -44,9 +65,23 @@ public class Custom_Controller : MonoBehaviour
             return;
         }
 
+        // Update gripTrans position
+        PointerTransform = raycastPointer.GetRefTransform();
+
+        // Check if this controller is holding something
+        // Based on this, the behavior of the inputs will change
+        if (m_GrabbedObject != null) {
+            HeldInputs();
+        }
+        else {
+            UnheldInputs();
+        }
+
+        /*
         // Check if the hand is currently holding something
         // This is entirely controlled by DistanceGrabber - we won't do the work for that
         CheckHolding();
+        Transform RPTransform = raycastPointer.GetReturnPosition();
 
         // Depending on if it's holding something, the behavior of the hand changes
         if (HeldObject != null) {
@@ -73,6 +108,7 @@ public class Custom_Controller : MonoBehaviour
             if (OVRInput.Get(CreateDeleteButton, m_Controller)) {   DeleteOrb();    }
             else {  StopDelete();   }
             */
+        /*
         } 
         else {
             // If an object is NOT being held, then there are several things to do:
@@ -86,33 +122,103 @@ public class Custom_Controller : MonoBehaviour
             if (OVRInput.GetDown(PlayButton, m_Controller) && !raycastPointer.GetStatus()) {   raycastPointer.TurnOn();  }
             if (OVRInput.GetUp(PlayButton, m_Controller) && raycastPointer.GetStatus()) {   raycastPointer.TurnOff();   }
             */
-
+        /*
             // 2) 
             if (OVRInput.Get(GripButton, m_Controller) > 0.1f && raycastPointer.GetHit() != null) {
                 HoveredObject = raycastPointer.GetHit();
-                float dist = Vector3.Distance(raycastPointer.GetReturnPosition().position, HoveredObject.transform.position);
-                //if (dist >= 3f && !isPulled) {
+                float dist = Vector3.Distance(RPTransform.position + RPTransform.forward*0.2f, HoveredObject.transform.position);
+                if (dist >= 0.1f) {
                 //if (!isPulled) {
                 //    StartCoroutine(PullBack());
                 //}
                     //HoveredObject.gameObject.transform.position = Vector3.Lerp(HoveredObject.gameObject.transform.position, raycastPointer.GetReturnPosition().position, Time.deltaTime * 3f);
                     //m_DistanceGrabber.SetTarget(HoveredObject.GetComponent<DistanceGrabbable>());
-                    Vector3 smoothedDelta = Vector3.MoveTowards(HoveredObject.gameObject.transform.position, this.transform.position, Time.deltaTime * 3f);
-                    HoveredObject.GetComponent<Rigidbody>().MovePosition(smoothedDelta);
+                    //Vector3 smoothedDelta = Vector3.MoveTowards(HoveredObject.gameObject.transform.position, RPTransform.position + RPTransform.forward*0.2f, Time.deltaTime * 3f);
+                    //HoveredObject.GetComponent<Rigidbody>().MovePosition(smoothedDelta);
                 //}
             }
 
             // 3)
             if (OVRInput.GetDown(CreateDeleteButton,m_Controller)) {
-                StartCoroutine(m_Game.CreateStar());
+                StartCoroutine(m_Game.CreateStarAtPosition(RPTransform.position + RPTransform.forward*0.2f));
             }
         }
+        */
+    }
+    
+    // 
+    private void HeldInputs() {
+        // Right now, the controller is holding an object
+
+        // Upon the grip immediately being let go, we remove the grab object and returns
+        if (OVRInput.Get(GripButton, m_Controller) <= 0.1f) {
+            GrabEnd();
+            return;
+        }
+
+
     }
 
+    private void UnheldInputs() {
+        // Right now, the controller doesn't have any objects its holding
+        // To that end, the way to go is to do the following:
+        // 1) Check if the pointer is colliding with an object.
+        Star possibleCollision = raycastPointer.GetHit();
+
+        // 2) If something is colliding, check if the OVRInput grip is being pressed
+        //      If pressed, set "m_GrabbedObject" to object of collision and return
+        if (OVRInput.Get(GripButton, m_Controller) > 0.1f && possibleCollision != null) {
+            GrabBegin(possibleCollision);
+            return;
+        }
+
+        // 3) Check if the star creation button is held
+        //      If pressed, generate a star in front of the controller
+        if (OVRInput.GetDown(CreateDeleteButton,m_Controller)) {
+            StartCoroutine(m_Game.CreateStarAtPosition(PointerTransform.position + PointerTransform.forward*0.2f));
+        }
+
+    }
+
+    private void GrabBegin(Star col) {
+        m_GrabbedObject = col;
+        raycastPointer.SetTarget(m_GrabbedObject);
+        m_GrabbedObject.GrabBegin(this.GetComponent<New_Custom_Controller>());
+    }
+    private void GrabEnd() {
+        raycastPointer.ResetTarget();
+
+        OVRPose localPose = new OVRPose { position = OVRInput.GetLocalControllerPosition(m_Controller), orientation = OVRInput.GetLocalControllerRotation(m_Controller) };
+        OVRPose offsetPose = new OVRPose { position = m_anchorOffsetPosition, orientation = m_anchorOffsetRotation };
+        localPose = localPose * offsetPose;
+
+		OVRPose trackingSpace = this.transform.ToOVRPose() * localPose.Inverse();
+		Vector3 linearVelocity = trackingSpace.orientation * OVRInput.GetLocalControllerVelocity(m_Controller);
+		Vector3 angularVelocity = trackingSpace.orientation * OVRInput.GetLocalControllerAngularVelocity(m_Controller);
+
+        m_GrabbedObject.GrabEnd(linearVelocity, angularVelocity);
+        m_GrabbedObject = null;
+    }
+
+    public Vector3 GetTargetRef() {
+        Transform rt = raycastPointer.GetRefTransform();
+        //Vector3 tr = rt.position + rt.forward*0.2f;
+        Vector3 tr = rt.position;
+        return tr;
+    }
+    public OVRInput.Controller GetController() {
+        return m_Controller;
+    }
+    public float GetForceStrength() {
+        return forceStrength;
+    }
+
+    /*
     private void CheckHolding() {
-        HeldObject = (DistanceGrabbable)m_DistanceGrabber.grabbedObject;
+        HeldObject = (OVRGrabbable)m_OVRGrabber.grabbedObject;
     }
-
+    */
+    /*
     private void RecordAndPoint_Down() {
         if (!HeldObject_NewOrb.CheckRecordingStatus()) {
             if (m_Game.CanRecord().Key == OVRInput.Controller.None) {
@@ -150,27 +256,6 @@ public class Custom_Controller : MonoBehaviour
         HoveredObject.GetComponent<Rigidbody>().AddForce((raycastPointer.GetReturnPosition().position - HoveredObject.transform.position).normalized * 10f * Time.smoothDeltaTime);
         yield return new WaitForSeconds(1f);
         isPulled = false;
-    }
-
-    /*
-    private void DeleteOrb() {
-        if (HeldObject_NewOrb.GetIsDeactivated()) return;
-        if (!CurrentlyDeleting) {
-            CurrentlyDeleting_StartTime = Time.time;
-            CurrentlyDeleting = true;
-            m_HandCanvasController.StartDeleting();
-        }
-        float TimeDiff = Time.time - CurrentlyDeleting_StartTime;
-        m_HandCanvasController.SetDeleteSlider(TimeDiff);
-        if (CurrentlyDeleting && TimeDiff >= HoldTimeThreshold) { 
-            HeldObject_NewOrb.Deactivate();
-        }
-    }
-    private void StopDelete() {
-        if (CurrentlyDeleting) {
-            m_HandCanvasController.DeactivateDeleteSlider();
-            CurrentlyDeleting = false;
-        }
     }
     */
 }

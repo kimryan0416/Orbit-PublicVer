@@ -114,4 +114,13 @@ public class Game : MonoBehaviour
         }
     }
 
+    public IEnumerator CreateStarAtPosition(Vector3 target) {
+        if (!creatingStar) {
+            creatingStar = true;
+            Instantiate(starPrefab, target, Quaternion.identity);
+            yield return new WaitForSeconds(1f);
+            creatingStar = false;
+        }
+    }
+
 }

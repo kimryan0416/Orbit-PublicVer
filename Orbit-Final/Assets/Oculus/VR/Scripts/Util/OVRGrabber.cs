@@ -376,7 +376,4 @@ public class OVRGrabber : MonoBehaviour
         }
     }
 
-    public void SetGrabbed(OVRGrabbable grabbable) {
-        m_grabbedObj = grabbable;
-    }
 }

@@ -358,5 +358,54 @@ namespace OculusSampleFramework
         {
             base.OffhandGrabbed(grabbable);
         }
+
+        public void SetTarget(DistanceGrabbable t) {
+            m_target = t;
+            m_targetCollider = t.GetComponent<SphereCollider>();
+        }
+
+        public void SetGrabbed(OVRGrabbable grabbable) {
+            m_grabbedObj = grabbable;
+            Custom_GrabBegin();
+        }
+
+        protected virtual void Custom_GrabBegin()
+        {
+
+            m_grabbedObj.GrabBegin(this, m_grabbedObj.GetComponent<SphereCollider>());
+
+            m_movingObjectToHand = true;
+            m_lastPos = transform.position;
+            m_lastRot = transform.rotation;
+
+            // If it's within a certain distance respect the no-snap.
+            Vector3 closestPointOnBounds = m_grabbedObj.GetComponent<SphereCollider>().ClosestPointOnBounds(m_gripTransform.position);
+            if(!m_grabbedObj.snapPosition && !m_grabbedObj.snapOrientation && m_noSnapThreshhold > 0.0f && (closestPointOnBounds - m_gripTransform.position).magnitude < m_noSnapThreshhold)
+            {
+                Vector3 relPos = m_grabbedObj.transform.position - transform.position;
+                m_movingObjectToHand = false;
+                relPos = Quaternion.Inverse(transform.rotation) * relPos;
+                m_grabbedObjectPosOff = relPos;
+                Quaternion relOri = Quaternion.Inverse(transform.rotation) * m_grabbedObj.transform.rotation;
+                m_grabbedObjectRotOff = relOri;
+            }
+            else
+            {
+                // Set up offsets for grabbed object desired position relative to hand.
+                m_grabbedObjectPosOff = m_gripTransform.localPosition;
+                if (m_grabbedObj.snapOffset)
+                {
+                    Vector3 snapOffset = m_grabbedObj.snapOffset.position;
+                    if (m_controller == OVRInput.Controller.LTouch) snapOffset.x = -snapOffset.x;
+                    m_grabbedObjectPosOff += snapOffset;
+                }
+
+                m_grabbedObjectRotOff = m_gripTransform.localRotation;
+                if (m_grabbedObj.snapOffset)
+                {
+                    m_grabbedObjectRotOff = m_grabbedObj.snapOffset.rotation * m_grabbedObjectRotOff;
+                }
+            }
+        }
     }
 }

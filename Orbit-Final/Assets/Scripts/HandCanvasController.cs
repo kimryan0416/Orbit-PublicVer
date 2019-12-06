@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class HandCanvasController : MonoBehaviour
 {
     //public bool isHeld;
     //public GameObject m_HeldUI;
 
-    public GameObject DefaultRecordText;
+    public TextMeshProUGUI DefaultRecordText;
     public Slider RecordSliderIU;
     public GameObject RecordingText;
 
@@ -44,21 +45,23 @@ public class HandCanvasController : MonoBehaviour
     */
 
     public void StartRecordSlider() {
-        RecordSliderIU.gameObject.SetActive(true);
         RecordSliderIU.value = 0;
+        DefaultRecordText.text = "3";
+        this.gameObject.SetActive(true);
     }
     public void SetRecordSlider(float curTime) {
         RecordSliderIU.value = (curTime < TimeThreshold) ? curTime*100f : TimeThreshold*100f;
+        int TimeRemaining = (curTime < TimeThreshold) ? (int)Mathf.Ceil(TimeThreshold - curTime) : 0;
         if (curTime >= TimeThreshold) {
-            RecordingText.SetActive(true);
-            DefaultRecordText.SetActive(false);
+            DefaultRecordText.text = "Recording";
+        } else {
+            DefaultRecordText.text = TimeRemaining.ToString();
         }
     }
     public void DeactivateRecordSlider() {
-        RecordSliderIU.gameObject.SetActive(false);
-        RecordingText.SetActive(false);
+        this.gameObject.SetActive(false);
         RecordSliderIU.value = 0;
-        DefaultRecordText.SetActive(true);
+        DefaultRecordText.text = TimeThreshold.ToString();
     }
     /*
     public void StartDeleting() {

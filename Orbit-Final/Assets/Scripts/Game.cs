@@ -13,7 +13,7 @@ public class Game : MonoBehaviour
     private bool micConnected;          // tracks if mic is connected to Oculus or not
     private int minFreq, maxFreq;       // the minimum and maximum frequency of the current microphone
     private List<GameObject> m_Stars = new List<GameObject>();  // Tracks all stars in the world
-    private bool creatingStar = false;
+    private GameObject emptyStar = null;
     #endregion
 
     #region Inputs
@@ -79,6 +79,7 @@ public class Game : MonoBehaviour
     public void AddStar(GameObject star) {
         if (m_Stars.Contains(star)) return;
         m_Stars.Add(star);
+        if (emptyStar == star) emptyStar = null;
     }
     public void RemoveStar(GameObject star) {
         if (!m_Stars.Contains(star)) return;
@@ -106,21 +107,19 @@ public class Game : MonoBehaviour
     }
 
     public IEnumerator CreateStar() {
-        if (!creatingStar) {
-            creatingStar = true;
-            Instantiate(starPrefab, StarBirthLocation.position, Quaternion.identity);
-            yield return new WaitForSeconds(1f);
-            creatingStar = false;
+        if (emptyStar == null) {
+            emptyStar = Instantiate(starPrefab, StarBirthLocation.position, Quaternion.identity);
         }
+        // else {}
+        yield return null;
     }
 
     public IEnumerator CreateStarAtPosition(Vector3 target) {
-        if (!creatingStar) {
-            creatingStar = true;
-            Instantiate(starPrefab, target, Quaternion.identity);
-            yield return new WaitForSeconds(1f);
-            creatingStar = false;
+        if (emptyStar == null) {
+            emptyStar = Instantiate(starPrefab, target, Quaternion.identity);
         }
+        // else {}
+        yield return null;
     }
 
 }

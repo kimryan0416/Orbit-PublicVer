@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class New_Pointer : MonoBehaviour
 {
+    public GameObject m_HoverObjectPrefab;
     public bool DebugToggle;
     public Transform refTransform;
     private LineRenderer m_LineRenderer;
@@ -15,6 +16,7 @@ public class New_Pointer : MonoBehaviour
     private Star targetRef = null;
     public GameObject TestRaycast;
     private Vector3 fromPos, toPos;
+    private GameObject m_HoverObject = null;
 
     private void Awake() {
         m_LineRenderer = this.GetComponent<LineRenderer>();
@@ -58,7 +60,7 @@ public class New_Pointer : MonoBehaviour
 
     private void CalculatePositions() {
         fromPos = refTransform.transform.position;
-        toPos = refTransform.transform.forward * 100f;
+        toPos = refTransform.transform.position + refTransform.transform.forward * 100f;
     }
 
     private void PerformRaycast() {
@@ -67,13 +69,22 @@ public class New_Pointer : MonoBehaviour
             if (hit.collider.CompareTag("Star")) {
                 if (DebugToggle) TestRaycast.SetActive(false);
                 hitObj = hit.collider.GetComponent<Star>();
+                if (m_HoverObject == null) {
+                    m_HoverObject = Instantiate(m_HoverObjectPrefab, hit.collider.transform.position, Quaternion.identity, hit.collider.transform);
+                    List<string> timeData = hitObj.GetDateOfCreation();
+                    if (timeData != null) {
+                        m_HoverObject.GetComponent<HoverObject>().SetText(timeData[0] + ' ' + timeData[1]);
+                    }
+                }
                 toPos = hit.collider.transform.position;
             } else {
                 if (DebugToggle) TestRaycast.SetActive(true);
+                if (m_HoverObject != null) Destroy(m_HoverObject);
                 hitObj = null;
             }
         } else {
             if (DebugToggle) TestRaycast.SetActive(true);
+            if (m_HoverObject != null) Destroy(m_HoverObject);
             hitObj = null;
         }
     }
@@ -98,5 +109,11 @@ public class New_Pointer : MonoBehaviour
     }
     public void ResetTarget() {
         targetRef = null;
+    }
+    public void DeactivateHover() {
+        if (m_HoverObject != null) m_HoverObject.SetActive(false);
+    }
+    public void ActivateHover() {
+        if (m_HoverObject != null) m_HoverObject.SetActive(true);
     }
 }

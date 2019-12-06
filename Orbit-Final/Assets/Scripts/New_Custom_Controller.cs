@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using OculusSampleFramework;
+using TMPro;
 
 public class New_Custom_Controller : MonoBehaviour
 {
@@ -20,6 +21,7 @@ public class New_Custom_Controller : MonoBehaviour
     public OVRInput.RawAxis1D GripButton;
     private Vector3 m_anchorOffsetPosition;
     private Quaternion m_anchorOffsetRotation;
+    private OVRGrabber m_OVRGrabber;
     #endregion
 
     #region Public Variables
@@ -30,16 +32,13 @@ public class New_Custom_Controller : MonoBehaviour
     #region Private Variables
     private Star m_GrabbedObject = null;      // The object this controller is currently grabbing
     Transform PointerTransform = null;              // The pointer's transformation reference 
+    private bool RecordAndPoint_TimeStarted = false;    // has the recording buffer been started?
+    private float RecordAndPoint_StartTime = 0.0f;      // the time of the recording buffer
     #endregion
 
     /*
-    private bool RecordAndPoint_TimeStarted = false;
-    private float RecordAndPoint_StartTime = 0.0f;
     private bool CurrentlyDeleting = false;
     private float CurrentlyDeleting_StartTime = 0.0f;
-
-    //private OVRInput.Controller m_Controller;
-    private OVRGrabber m_OVRGrabber;
     private OVRGrabbable HeldObject;
     private NewOrb HeldObject_NewOrb;
     private NewOrb HoveredObject;
@@ -48,7 +47,7 @@ public class New_Custom_Controller : MonoBehaviour
 
     private void Awake()
     {
-        //m_OVRGrabber = this.GetComponent<OVRGrabber>();
+        m_OVRGrabber = this.GetComponent<OVRGrabber>();
         //m_Controller = m_OVRGrabber.GetController();
         m_HandCanvasController.InitializeRecordSlider(HoldTimeThreshold);   // Initialize the record slider with the hold time threshold
         raycastPointer = this.GetComponent<New_Pointer>();                      // get the pointer
@@ -156,6 +155,22 @@ public class New_Custom_Controller : MonoBehaviour
             return;
         }
 
+        // If an object is being held, there are several things to do:
+        // 1) If RecordAndPoint (default = Index Trigger) clicked AND held for some time, then a recording starts or begins to overwrite
+        // 2) If RecordAndPoint (default = Index Trigger) is let go, then the recording stops
+        // 3) If PlayButton (default = A/X button) is clicked AND if there's an audio clip inside, it is toggled on/off
+        // 4) If CreateDeletetButton (default = B/Y button) is clicked and held for some time, then the star itself is deleted
+
+        // 1)
+        if (OVRInput.Get(RecordAndPointButton, m_Controller) > 0.1f) {      RecordAndPoint_Down();  }
+
+        // 2)
+        if (OVRInput.Get(RecordAndPointButton, m_Controller) <= 0.1f) {     RecordAndPoint_Up();    }
+
+        // 3) 
+        if (OVRInput.GetDown(PlayButton, m_Controller) && m_GrabbedObject.GetAudioClip() != null) {   m_GrabbedObject.ToggleAudio();   }
+
+
 
     }
 
@@ -163,6 +178,10 @@ public class New_Custom_Controller : MonoBehaviour
         // Right now, the controller doesn't have any objects its holding
         // To that end, the way to go is to do the following:
         // 1) Check if the pointer is colliding with an object.
+        if ((OVRGrabbable)m_OVRGrabber.grabbedObject != null) {
+            GrabBegin(m_OVRGrabber.grabbedObject.GetComponent<Star>());
+            return;
+        }
         Star possibleCollision = raycastPointer.GetHit();
 
         // 2) If something is colliding, check if the OVRInput grip is being pressed
@@ -212,15 +231,15 @@ public class New_Custom_Controller : MonoBehaviour
     public float GetForceStrength() {
         return forceStrength;
     }
-
-    /*
-    private void CheckHolding() {
-        HeldObject = (OVRGrabbable)m_OVRGrabber.grabbedObject;
+    public void ActivateHover() {
+        raycastPointer.ActivateHover();
     }
-    */
-    /*
+    public void DeactivateHover() {
+        raycastPointer.DeactivateHover();
+    }
+    
     private void RecordAndPoint_Down() {
-        if (!HeldObject_NewOrb.CheckRecordingStatus()) {
+        if (!m_GrabbedObject.CheckRecordingStatus()) {
             if (m_Game.CanRecord().Key == OVRInput.Controller.None) {
                 // we've got the go-ahead, start recording
                 if (!RecordAndPoint_TimeStarted) {
@@ -231,9 +250,8 @@ public class New_Custom_Controller : MonoBehaviour
                 }
                 float TimeDiff = Time.time - RecordAndPoint_StartTime;
                 m_HandCanvasController.SetRecordSlider(TimeDiff);
-                
-                if (RecordAndPoint_TimeStarted && TimeDiff >= HoldTimeThreshold) { 
-                    HeldObject_NewOrb.StartRecording();
+                if (RecordAndPoint_TimeStarted && TimeDiff >= HoldTimeThreshold) {
+                    m_GrabbedObject.StartRecording();
                 }
             } else {
                 m_HandCanvasController.DeactivateRecordSlider();
@@ -245,11 +263,12 @@ public class New_Custom_Controller : MonoBehaviour
         RecordAndPoint_StartTime = 0.0f;
         RecordAndPoint_TimeStarted = false;
         m_HandCanvasController.DeactivateRecordSlider();
-        if (HeldObject_NewOrb.CheckRecordingStatus()) {
-            HeldObject_NewOrb.EndRecording();
-            m_Game.AddStar(HeldObject.gameObject);
+        if (m_GrabbedObject.CheckRecordingStatus()) {
+            m_GrabbedObject.EndRecording();
+            m_Game.AddStar(m_GrabbedObject.gameObject);
         }
     }
+    /*
 
     private IEnumerator PullBack() {
         isPulled = true;

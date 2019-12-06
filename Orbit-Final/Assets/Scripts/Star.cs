@@ -27,6 +27,7 @@ public class Star : MonoBehaviour
     private List<Vector3> positions = new List<Vector3>();
     private Vector3 prevPos;
     private Vector3 linearVelocity;
+    private string theTime, theDate;
     #endregion
 
     /*
@@ -99,27 +100,6 @@ public class Star : MonoBehaviour
         // If mice is attached, update frequencies
         minFreq = m_Game.GetMinFrequency();
         maxFreq = m_Game.GetMinFrequency();
-
-        /*
-        // If a downpress on the trigger was detected by the controller holding the star, and we're not recording, initialize recording
-        if (OVRInput.Get(m_StartAudioButton, m_GrabbedBy) > 0.1f && !isRecording) {
-            // Check if we can even start recording - check with Game if the other hand is recording
-            KeyValuePair<OVRInput.Controller, bool> checkIfRecording = m_Game.CanRecord();
-            if (checkIfRecording.Key == OVRInput.Controller.None) {
-                // we've got the go-ahead, start recording
-                StartRecording();
-            }
-        }
-        // If a letting go of the trigger was detected by the controller holding the star, and we're currently recording, stop recording
-        if (OVRInput.Get(m_StartAudioButton, m_GrabbedBy) <= 0.1f && isRecording) {
-            EndRecording();
-        }
-
-        // If the player presses "A" or "X" on their respective controller, and there's an audio clip that exists inside the orb, we toggle it
-        if (OVRInput.GetDown(m_PlayAudioButton, m_GrabbedBy) && m_AudioSource.clip != null) {
-            ToggleAudio();
-        }
-        */
     }
 
     // Alter the appearance of the orb - checks for presence of audio clip and color of star
@@ -160,42 +140,26 @@ public class Star : MonoBehaviour
         return;
     }
     private void MoveStar() {
-        //this.transform.position = Vector3.Lerp(this.transform.position, m_GrabbedBy.GetTargetRef(), Time.deltaTime * 3f);
         float dist = Vector3.Distance(m_GrabbedBy.GetTargetRef(),this.transform.position);
         if (dist > 0.05) {
             Vector3 dir = m_GrabbedBy.GetTargetRef() - this.transform.position;
             this.transform.position = this.transform.position + dir.normalized * m_GrabbedBy.GetForceStrength() * Time.deltaTime;
         } else {
             this.transform.position = m_GrabbedBy.GetTargetRef();
+            m_GrabbedBy.DeactivateHover();
         }
         m_Rigidbody.velocity = linearVelocity;
-
-    
-        //dir.Normalize();
-
-        //dir *= m_GrabbedBy.GetForceStrength() * m_Rigidbody.mass * Time.deltaTime;
-
-        //dir = dir.normalized * 3f * Time.deltaTime;
-        //m_Rigidbody.MovePosition(this.transform.position + dir);
-        //m_Rigidbody.AddForce(dir, ForceMode.Acceleration);
-
     }
     public void GrabBegin(New_Custom_Controller contr) {
         m_GrabbedBy = contr;
         m_SphereCollider.enabled = false;
     }
     public void GrabEnd(Vector3 linVel, Vector3 angVel) {
+        m_GrabbedBy.ActivateHover();
         m_GrabbedBy = null;
         m_Rigidbody.velocity = linVel;
         m_Rigidbody.angularVelocity = angVel;
         m_SphereCollider.enabled = true;
-        /*
-        Vector3 avg = Vector3.zero;
-        for (int i = 0; i < positions.Count-2; i++) {
-            avg = avg + (positions[i+1] - positions[i]);
-        }
-        m_Rigidbody.AddForce(avg * m_GrabbedBy.GetForceStrength(), ForceMode.Impulse);
-        */
     }
 
     public void StartRecording() {
@@ -209,6 +173,8 @@ public class Star : MonoBehaviour
         isRecording = false;
         m_Game.SetControllerStatus(m_GrabbedBy.GetController(), false);
         Microphone.End(null); //Stop the audio recording
+        theTime = System.DateTime.Now.ToString("hh:mm:ss"); 
+        theDate = System.DateTime.Now.ToString("MM/dd/yyyy");
 		m_AudioSource.Play(); //Playback the recorded audio
     }
     public bool CheckRecordingStatus() {
@@ -227,6 +193,9 @@ public class Star : MonoBehaviour
     }
     public AudioClip GetAudioClip() {
         return m_AudioSource.clip;
+    }
+    public List<string> GetDateOfCreation() {
+        return (theDate != null && theTime != null) ? new List<string>(){ theDate, theTime } : null;
     }
 
     public void Deactivate(){ 

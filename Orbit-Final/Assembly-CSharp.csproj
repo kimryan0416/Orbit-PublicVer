@@ -341,6 +341,7 @@
      <Compile Include="Assets\Scripts\Game.cs" />
      <Compile Include="Assets\Scripts\HandCanvasController.cs" />
      <Compile Include="Assets\Scripts\HoverController.cs" />
+     <Compile Include="Assets\Scripts\HoverObject.cs" />
      <Compile Include="Assets\Scripts\New_Custom_Controller.cs" />
      <Compile Include="Assets\Scripts\New_Pointer.cs" />
      <Compile Include="Assets\Scripts\NewOrb.cs" />
